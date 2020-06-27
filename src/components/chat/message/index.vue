@@ -21,7 +21,9 @@
               <u-avatar v-else-if="item.type & MessageType.self" :user="item"></u-avatar>
             </v-col>
           </v-row>
-          <v-row v-else-if="item.type & MessageType.welcome"></v-row>
+          <v-row v-else-if="item.type & MessageType.welcome">
+            {{item.user}}已加入
+          </v-row>
         </v-hover>
       </template>
     </v-container>
@@ -42,8 +44,8 @@
 
 <script>
   import UAvatar from '../../common/user_avatar';
-  const {EventType, MessageType, PORT, getNow} = require('../../../util');
-  const socket = require('socket.io-client')(`http://localhost:${PORT}`);
+  const {EventType, MessageType, getNow, socket} = require('../../../util');
+
   export default {
     name: "Message",
     components: {
@@ -51,6 +53,7 @@
     },
     data () {
       return {
+        nickname: '',
         hm: [],
         user_input: '',
         append_buttons: [
@@ -59,18 +62,17 @@
           {icon: 'fas fa-gamepad'},
         ],
         MessageType,
-        chat_type: MessageType.self & MessageType.other
+        chat_type: MessageType.self & MessageType.other,
       }
     },
     mounted () {
-      console.log(socket);
       this.bindReceive();
     },
     methods: {
       sendMessage() {
         if (this.user_input !== '') {
           let data = {
-            user: '2',
+            user: this.nickname,
             message: this.user_input,
             deliver: getNow()
           };
@@ -84,11 +86,16 @@
         this.hm.push({...data, type});
       },
       bindReceive() {
+        socket.on(EventType.newUser, data => {
+          console.log(`rrrrr`, data)
+          this.nickname = data.nickname;
+        })
         socket.on(EventType.newMessage, data => {
           this.addNewMessage(data, MessageType.other);
         });
         socket.on(EventType.welcome, data => {
-          this.addNewMessage(data, MessageType.welcome);
+          // this.addNewMessage(data, MessageType.welcome);
+          console.log('welcome, ' ,data)
         });
       }
 

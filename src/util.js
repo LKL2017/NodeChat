@@ -1,4 +1,8 @@
+const PORT = 3000;
+const socket = require('socket.io-client')(`http://localhost:${PORT}`);
+
 const EventType = {
+  newUser: 'new user',
   newMessage: 'new message',
   welcome: 'welcome',
 };
@@ -18,6 +22,6 @@ function getNow() {
 module.exports = {
   EventType,
   MessageType,
-  PORT: 3000,
+  socket,
   getNow
 };

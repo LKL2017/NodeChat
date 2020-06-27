@@ -2,7 +2,7 @@
   <v-app>
 
     <!--member-->
-    <v-navigation-drawer app clipped right>
+    <v-navigation-drawer app clipped right :value="false">
       <member></member>
     </v-navigation-drawer>
 
@@ -24,7 +24,8 @@
 
 
     <v-main>
-      <message></message>
+      <!--<message></message>-->
+      <router-view></router-view>
     </v-main>
 
   </v-app>

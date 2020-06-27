@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "node_serve": "node ./src/server/index.js",
+    "start": "concurrently \"npm run serve\" \"npm run node_serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -12,6 +14,7 @@
     "express": "^4.17.1",
     "socket.io": "^2.3.0",
     "vue": "^2.6.11",
+    "vue-router": "^3.3.4",
     "vuetify": "^2.2.11"
   },
   "devDependencies": {

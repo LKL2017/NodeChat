@@ -1,5 +1,6 @@
-<<<<<<< HEAD
-# group-chat
+# NodeChat
+基于socket.io的聊天室项目，主要目的为熟悉node.js使用   
+
 
 ## Project setup
 ```
@@ -7,8 +8,9 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
+####（本地启动node server和页面server）
 ```
-npm run serve
+npm run start
 ```
 
 ### Compiles and minifies for production
@@ -26,9 +28,10 @@ npm run test
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-=======
-# NodeChat
-A Chat Project for the purpose of learning Node.js   
->>>>>>> 636ba7c41685ddb68476285993fbe698b5c054a2
+---
+
+####简要规划
+1. ~~基于express的基本服务器结构~~
+2. 路由分离
+3. 支持聊天频道
+4. 待定
