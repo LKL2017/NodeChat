@@ -13,7 +13,8 @@
 </template>
 
 <script>
-  const {socket, EventType} = require('../../../util');
+  const {PORT, EventType} = require('../../../util');
+  const socket = require('socket.io-client')(`http://localhost:${PORT}`);
   export default {
     name: "nick_name",
     data () {
@@ -23,9 +24,8 @@
     },
     methods: {
       gotoChat() {
-        console.log('---',this.nickname)
-        socket.emit(EventType.newUser, {nickname: this.nickname});
-        this.$router.push({path: '/chat'});
+        // socket.emit(EventType.newUser, {nickname: this.nickname});
+        this.$router.push({name: 'chat', params: {nickname: this.nickname}});
       }
     }
   }

@@ -14,7 +14,9 @@ export default new VueRouter({
     },
     {
       path: '/chat',
-      component: Message
+      name: 'chat',
+      component: Message,
+      props: true,
     }
   ]
 })

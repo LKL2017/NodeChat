@@ -1,5 +1,5 @@
 const PORT = 3000;
-const socket = require('socket.io-client')(`http://localhost:${PORT}`);
+
 
 const EventType = {
   newUser: 'new user',
@@ -16,12 +16,16 @@ const MessageType = {
 
 function getNow() {
   let d = new Date();
-  return `${d.getHours()}:${d.getMinutes()}`;
+  let h = d.getHours();
+  let m = d.getMinutes();
+  m = m.length === 1 ? '0' + m : m;
+  return `${h}:${m}`;
 }
 
 module.exports = {
   EventType,
   MessageType,
-  socket,
+  // socket,
+  PORT,
   getNow
 };

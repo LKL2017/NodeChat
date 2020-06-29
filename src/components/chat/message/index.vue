@@ -44,7 +44,8 @@
 
 <script>
   import UAvatar from '../../common/user_avatar';
-  const {EventType, MessageType, getNow, socket} = require('../../../util');
+  const {EventType, MessageType, getNow, PORT} = require('../../../util');
+  const socket = require('socket.io-client')(`http://localhost:${PORT}`);
 
   export default {
     name: "Message",
@@ -67,6 +68,7 @@
     },
     mounted () {
       this.bindReceive();
+      this.joinRoom(); //绑定事件之后触发才生效
     },
     methods: {
       sendMessage() {
@@ -83,18 +85,23 @@
         }
       },
       addNewMessage(data, type) {
+        console.log('add', type);
         this.hm.push({...data, type});
+      },
+      joinRoom() {
+        let name = this.$route.params.nickname;
+        socket.emit(EventType.newUser, {nickname: name});
       },
       bindReceive() {
         socket.on(EventType.newUser, data => {
-          console.log(`rrrrr`, data)
+          console.log(`rrrrr`, data);
           this.nickname = data.nickname;
         })
         socket.on(EventType.newMessage, data => {
           this.addNewMessage(data, MessageType.other);
         });
         socket.on(EventType.welcome, data => {
-          // this.addNewMessage(data, MessageType.welcome);
+          this.addNewMessage(data, MessageType.welcome);
           console.log('welcome, ' ,data)
         });
       }
