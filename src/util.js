@@ -9,9 +9,9 @@ const EventType = {
 
 const MessageType = {
   self: 1 << 1,
-  other: 2 << 1,
-  welcome: 3 << 1,
-  notice: 4 << 1
+  other: 1 << 2,
+  welcome: 1 << 3,
+  notice: 1 << 4
 };
 
 function getNow() {

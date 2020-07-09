@@ -3,7 +3,7 @@
     <v-container class="history-message-box">
       <template v-for="item in hm">
         <v-hover v-slot:default="{hover}" :key="item.id" >
-          <v-row v-if="item.type | chat_type" :class="{'is-row-hover': hover}">
+          <v-row v-if="item.type & chat_type" :class="{'is-row-hover': hover}">
             <v-col cols="1" align-self="center">
               <u-avatar v-if="item.type & MessageType.other" :user="item"></u-avatar>
             </v-col>
@@ -22,7 +22,7 @@
             </v-col>
           </v-row>
           <v-row v-else-if="item.type & MessageType.welcome">
-            {{item.user}}已加入
+            {{item.nickname}}已加入
           </v-row>
         </v-hover>
       </template>
@@ -63,7 +63,7 @@
           {icon: 'fas fa-gamepad'},
         ],
         MessageType,
-        chat_type: MessageType.self & MessageType.other,
+        chat_type: MessageType.self | MessageType.other,
       }
     },
     mounted () {
@@ -91,6 +91,7 @@
       joinRoom() {
         let name = this.$route.params.nickname;
         socket.emit(EventType.newUser, {nickname: name});
+        socket.emit(EventType.welcome, {nickname: name});
       },
       bindReceive() {
         socket.on(EventType.newUser, data => {
