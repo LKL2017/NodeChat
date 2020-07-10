@@ -44,8 +44,10 @@
 
 <script>
   import UAvatar from '../../common/user_avatar';
-  const {EventType, MessageType, getNow, PORT} = require('../../../util');
-  const socket = require('socket.io-client')(`http://localhost:${PORT}`);
+  const {EventType, MessageType, getNow, URL, PORT, RoomPrefix} = require('../../../util');
+  import event_bus from "../../../event_bus";
+  const io = require('socket.io-client');
+  let socket = io(`${URL}:${PORT}`);
 
   export default {
     name: "Message",
@@ -64,9 +66,11 @@
         ],
         MessageType,
         chat_type: MessageType.self | MessageType.other,
+        room_id: null,
       }
     },
     mounted () {
+      this.listenBus();
       this.bindReceive();
       this.joinRoom(); //绑定事件之后触发才生效
     },
@@ -105,8 +109,14 @@
           this.addNewMessage(data, MessageType.welcome);
           console.log('welcome, ' ,data)
         });
+      },
+      listenBus() {
+        event_bus.$on(EventType.switchChannel, this.switchChannel);
+      },
+      switchChannel() {
+        this.room_id = RoomPrefix + '1'; //should from check
+        socket.emit(EventType.switchChannel, {room: this.room_id});
       }
-
     }
   }
 </script>

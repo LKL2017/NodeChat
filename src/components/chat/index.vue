@@ -8,7 +8,7 @@
 
     <!--header-->
     <v-app-bar app clipped-right color="blue-grey darken-3" dark>
-      <v-app-bar-nav-icon @click.stop="menuDrawer = !menuDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="channelDrawer = !channelDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Group Chat</v-toolbar-title>
       <v-spacer></v-spacer>
       <!--<v-app-bar-nav-icon @click.stop="memberDrawer = !memberDrawer"></v-app-bar-nav-icon>-->
@@ -16,10 +16,10 @@
 
 
     <v-navigation-drawer
-        v-model="menuDrawer"
+        v-model="channelDrawer"
         app
     >
-      TODO
+      <channel></channel>
     </v-navigation-drawer>
 
 
@@ -33,18 +33,17 @@
 
 <script>
   import Member from './member.vue';
-  import Message from './message/index.vue';
+  import Channel from './channel.vue';
   export default {
     props: {
       source: String,
     },
     components: {
       Member,
-      Message
+      Channel
     },
     data: () => ({
-      menuDrawer: null,
-      memberDrawer: null,
+      channelDrawer: false,
     }),
   }
 </script>

@@ -1,10 +1,12 @@
+const URL = 'http://localhost';
 const PORT = 3000;
-
+const RoomPrefix = 'Chat_Room_';
 
 const EventType = {
   newUser: 'new user',
   newMessage: 'new message',
   welcome: 'welcome',
+  switchChannel: 'switchChannel'
 };
 
 const MessageType = {
@@ -26,6 +28,8 @@ module.exports = {
   EventType,
   MessageType,
   // socket,
+  URL,
   PORT,
-  getNow
+  getNow,
+  RoomPrefix
 };
